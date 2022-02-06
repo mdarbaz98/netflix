@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import HomeScreen from "./HomeScreen";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginScreen from "./LoginScreen";
+import { useEffect } from "react";
+import { auth } from "./firebase";
+import {useDispatch, useSelector} from "react-redux";
+import { login, logout, selectUser } from "./userSlice";
+import Profilepage from "./Profilepage";
 function App() {
+
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth)=>{
+      if(userAuth){
+        console.log(userAuth)
+        dispatch(login({
+          uid: userAuth.uid,
+          email: userAuth.email
+        }))
+      }
+      else{
+        // logout
+        dispatch(logout());
+      }
+    });
+
+    return unsubscribe;
+  },[dispatch])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+      {!user ?
+      <LoginScreen />:
+      <Switch>
+      <Route path="/profile" exact>
+            <Profilepage />
+          </Route>
+          <Route path="/" exact>
+            <HomeScreen />
+          </Route>
+        </Switch>}
+      </Router>
     </div>
   );
 }
