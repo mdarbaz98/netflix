@@ -65,6 +65,13 @@ color: #fff;
     .Banner{
         height: 100vh;
     }
+    .Banner_content{
+        padding-top: 385px;
+    }
+    .Banner_title{
+        font-size: 2rem;
+    font-weight: 700;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 922px){

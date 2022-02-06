@@ -96,3 +96,22 @@
     color: #fff;
     cursor: pointer;
 }
+
+@media screen and (max-width: 600px){
+    .LoginScreenBody > h1{
+        font-size: 2.125rem;
+    }
+    .LoginScreenBody > h2{
+        font-size: 1.4rem;
+    }
+    .LoginScreenBody > h3{
+        font-size: 1.2rem;
+    }
+    .Login_input > form > input{
+        width: 65%;
+    }
+    .Get_started_button{
+        padding: 16px 8px;
+    font-size: 0.8rem;
+    }
+}
